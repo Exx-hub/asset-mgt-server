@@ -1,4 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
+app.use(cors());
+require("dotenv").config();
 
-app.listen(3001, () => console.log("Server listening on port 3001"));
+const PORT = process.env.PORT;
+
+app.get("/", (req, res) => {
+	res.json({ message: "ROOT route for Asset Mgt System" });
+});
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

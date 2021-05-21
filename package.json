@@ -4,12 +4,15 @@
   "description": "The API for Asset Mgt System",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index"
   },
   "author": "Alvin Acosta",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1"
   },
   "devDependencies": {
