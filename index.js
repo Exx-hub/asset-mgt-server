@@ -21,4 +21,4 @@ app.get("/", (req, res) => {
 	res.json({ message: "ROOT route for Asset Mgt System" });
 });
 
-app.listen(3000, () => console.log(`Server listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
