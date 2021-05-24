@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const auth = require("../lib/auth");
 
 const bcrypt = require("bcrypt");
 // used to encrpyt data like passwords
@@ -33,7 +34,7 @@ const login = async (req, res) => {
 	const email = req.body.emailAddress;
 	const password = req.body.password;
 
-	const foundUser = await User.findOne({ emailAddress: email }, "_id");
+	const foundUser = await User.findOne({ emailAddress: email }, "password");
 
 	if (!foundUser) {
 		res.send({
@@ -41,10 +42,16 @@ const login = async (req, res) => {
 			message: "Username not registerd",
 		});
 	} else {
-		res.send({
-			userDetails: foundUser,
-			message: "This is the user",
-		});
+		const passwordsMatch = bcrypt.compareSync(password, foundUser.password);
+
+		if (passwordsMatch) {
+			res.send({
+				message: "Successful login!",
+				token: auth.createAccessToken(foundUser._id),
+			});
+		} else {
+			res.send("incorrect password");
+		}
 	}
 };
 
