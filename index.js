@@ -1,9 +1,21 @@
 const express = require("express");
-const cors = require("cors");
 const app = express();
+const cors = require("cors");
 app.use(cors());
-require("dotenv").config();
 const mongoose = require("mongoose");
+require("dotenv").config();
+
+app.use(express.json());
+
+// Application routes
+const userRoutes = require("./routes/userRoutes");
+const assetRoutes = require("./routes/assetRoutes");
+const transactionRoutes = require("./routes/transactionRoutes");
+
+// API routes
+app.use("/api/users", userRoutes);
+app.use("/api/assets", assetRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 mongoose.connect(process.env.DB_CONN_STRING, {
 	useNewUrlParser: true,
