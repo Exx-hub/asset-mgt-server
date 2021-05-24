@@ -7,7 +7,7 @@ require("dotenv").config();
 
 app.use(express.json());
 
-// Application routes
+// API routes
 const userRoutes = require("./routes/userRoutes");
 const assetRoutes = require("./routes/assetRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
@@ -17,7 +17,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/assets", assetRoutes);
 app.use("/api/transactions", transactionRoutes);
 
-mongoose.connect(process.env.DB_CONN_STRING, {
+// ENV VARIABLES
+const PORT = process.env.PORT;
+const dbUri = process.env.DB_CONN_STRING;
+
+// Mongoose Setup
+mongoose.connect(dbUri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false,
@@ -27,10 +32,10 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection Error: "));
 db.once("open", () => console.log("Db connection established!"));
 
-const PORT = process.env.PORT;
-
+// Root Route
 app.get("/", (req, res) => {
 	res.json({ message: "ROOT route for Asset Mgt System" });
 });
 
+// Server Listen
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
