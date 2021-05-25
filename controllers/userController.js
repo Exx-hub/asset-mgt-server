@@ -59,8 +59,16 @@ const login = async (req, res) => {
 	}
 };
 
-const details = (req, res) => {
-	res.json({ message: "details" });
+const details = async (req, res) => {
+	const id = req.query.id;
+
+	try {
+		const foundUser = await User.findById(id, "-password");
+
+		res.send(foundUser);
+	} catch (err) {
+		res.status(400).send("Error getting user details.");
+	}
 };
 
 const updateUser = (req, res) => {

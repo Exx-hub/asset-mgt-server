@@ -19,8 +19,16 @@ const createNewAsset = (req, res) => {
 	});
 };
 
-const details = (req, res) => {
-	res.send("asset details");
+const details = async (req, res) => {
+	const id = req.query.id;
+
+	try {
+		const foundAsset = await Asset.findById(id);
+
+		res.send(foundAsset);
+	} catch (err) {
+		res.status(400).send("Error getting asset details.");
+	}
 };
 
 const update = (req, res) => {

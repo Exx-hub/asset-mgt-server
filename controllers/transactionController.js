@@ -6,14 +6,8 @@ const createNewTransaction = (req, res) => {
 	let newTransaction = new Transaction({
 		amount,
 		description,
-		account: {
-			name: account.name,
-			accountType: account.accountType,
-		},
-		category: {
-			categoryType: category.categoryType,
-			name: category.name,
-		},
+		account,
+		category,
 		transactionType,
 	});
 
@@ -27,8 +21,16 @@ const createNewTransaction = (req, res) => {
 	});
 };
 
-const details = (req, res) => {
-	res.send("transaction details");
+const details = async (req, res) => {
+	const id = req.query.id;
+
+	try {
+		const foundTransaction = await Transaction.findById(id);
+
+		res.send(foundTransaction);
+	} catch (err) {
+		res.status(400).send("Error getting transaction details.");
+	}
 };
 
 const update = (req, res) => {
