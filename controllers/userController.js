@@ -34,24 +34,28 @@ const login = async (req, res) => {
 	const email = req.body.emailAddress;
 	const password = req.body.password;
 
-	const foundUser = await User.findOne({ emailAddress: email }, "password");
+	try {
+		const foundUser = await User.findOne({ emailAddress: email }, "password");
 
-	if (!foundUser) {
-		res.send({
-			userDetails: "Not found",
-			message: "Username not registerd",
-		});
-	} else {
-		const passwordsMatch = bcrypt.compareSync(password, foundUser.password);
-
-		if (passwordsMatch) {
+		if (!foundUser) {
 			res.send({
-				message: "Successful login!",
-				token: auth.createAccessToken(foundUser._id),
+				userDetails: "Not found",
+				message: "Username not registerd",
 			});
 		} else {
-			res.send("incorrect password");
+			const passwordsMatch = bcrypt.compareSync(password, foundUser.password);
+
+			if (passwordsMatch) {
+				res.send({
+					message: "Successful login!",
+					token: auth.createAccessToken(foundUser._id),
+				});
+			} else {
+				res.send("incorrect password");
+			}
 		}
+	} catch (err) {
+		res.status(400).send("Error logging in!");
 	}
 };
 

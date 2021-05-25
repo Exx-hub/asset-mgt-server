@@ -7,7 +7,7 @@ router.post("/", (req, res) => {
 	res.send("root route of transactions");
 });
 
-router.post("/create", tranasactionController.create);
+router.post("/create", tranasactionController.createNewTransaction);
 router.get("/details", tranasactionController.details);
 router.put("/update", tranasactionController.update);
 router.delete("/delete", tranasactionController.deleteTransaction);

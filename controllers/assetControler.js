@@ -1,5 +1,22 @@
-const create = (req, res) => {
-	res.send("create asset");
+const Asset = require("../models/assetModel");
+
+const createNewAsset = (req, res) => {
+	let { name, amount, assetType } = req.body;
+
+	let newAsset = new Asset({
+		name,
+		amount,
+		assetType,
+	});
+
+	newAsset.save((err, savedAsset) => {
+		if (err) console.error(err);
+
+		res.json({
+			message: "Asset Saved",
+			data: savedAsset,
+		});
+	});
 };
 
 const details = (req, res) => {
@@ -15,7 +32,7 @@ const deleteAsset = (req, res) => {
 };
 
 module.exports = {
-	create,
+	createNewAsset,
 	details,
 	update,
 	deleteAsset,
