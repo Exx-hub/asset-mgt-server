@@ -38,10 +38,7 @@ const login = async (req, res) => {
 		const foundUser = await User.findOne({ emailAddress: email }, "password");
 
 		if (!foundUser) {
-			res.send({
-				userDetails: "Not found",
-				message: "Username not registerd",
-			});
+			res.send({ message: "Username not registerd" });
 		} else {
 			const passwordsMatch = bcrypt.compareSync(password, foundUser.password);
 
@@ -51,11 +48,11 @@ const login = async (req, res) => {
 					token: auth.createAccessToken(foundUser._id),
 				});
 			} else {
-				res.send("incorrect password");
+				res.send({ message: "Incorrect Password!" });
 			}
 		}
 	} catch (err) {
-		res.status(400).send("Error logging in!");
+		res.status(400).send({ message: "Error logging in!" });
 	}
 };
 
