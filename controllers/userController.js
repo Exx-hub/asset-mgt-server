@@ -23,10 +23,10 @@ const register = async (req, res) => {
 
 		res.json({
 			message: "Save Successful",
-			data: savedUser,
+			data: true,
 		});
 	} catch (err) {
-		res.status(400).send("Error saving user!");
+		res.status(400).send({ message: "Failed Registration", data: false });
 	}
 };
 
