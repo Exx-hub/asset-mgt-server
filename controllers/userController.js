@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const auth = require("../lib/auth");
+const { createAccessToken } = require("../middlewares/auth");
 
 const bcrypt = require("bcrypt");
 // used to encrpyt data like passwords
@@ -45,7 +45,7 @@ const login = async (req, res) => {
 			if (passwordsMatch) {
 				res.send({
 					message: "Successful login!",
-					token: auth.createAccessToken(foundUser._id),
+					token: createAccessToken(foundUser._id),
 				});
 			} else {
 				res.send({ message: "Incorrect Password!" });

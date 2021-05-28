@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next) {
 	console.log(req.headers.authorization);
-	const token = req.headers.authorization;
+	let token = req.headers.authorization;
 	console.log(token);
 
 	if (!token) res.send("access denied");
@@ -10,6 +10,9 @@ function verifyToken(req, res, next) {
 	try {
 		const verified = jwt.verify(token.slice(7), process.env.JWT_SECRET);
 
+		// adds a user property to the request object with the verified token
+		// then after next, the endpoint has access to that user property
+		// which can be accessed by the endpoint after next function
 		req.user = verified;
 		next();
 	} catch (err) {
