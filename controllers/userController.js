@@ -38,7 +38,7 @@ const login = async (req, res) => {
 		const foundUser = await User.findOne({ emailAddress: email }, "password");
 
 		if (!foundUser) {
-			res.send({ message: "Username not registerd" });
+			res.send({ message: "Username not registered" });
 		} else {
 			const passwordsMatch = bcrypt.compareSync(password, foundUser.password);
 
@@ -56,8 +56,13 @@ const login = async (req, res) => {
 	}
 };
 
+// pending change in details nothing else changed.
+
 const details = async (req, res) => {
-	const id = req.query.id;
+	// const id = req.query.id;
+
+	console.log(req.user);
+	const id = req.user.userId;
 
 	try {
 		const foundUser = await User.findById(id, "-password");
