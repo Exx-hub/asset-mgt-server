@@ -56,8 +56,6 @@ const login = async (req, res) => {
 	}
 };
 
-// pending change in details nothing else changed.
-
 const details = async (req, res) => {
 	// const id = req.query.id;
 
